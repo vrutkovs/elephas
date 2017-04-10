@@ -1,0 +1,60 @@
+{
+    "app-id": "com.github.Elephas",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "master",
+    "sdk": "org.gnome.Sdk",
+    "command": "elephas",
+    "tags": ["nightly"],
+    "desktop-file-name-prefix": "(Nightly) ",
+    "finish-args": [
+        /* X11  XShm access */
+        "--share=ipc", "--socket=x11",
+        /* Wayland access */
+        "--socket=wayland",
+        /* Needed for dconf to work */
+        "--filesystem=xdg-run/dconf", "--filesystem=~/.config/dconf:ro",
+        "--talk-name=ca.desrt.dconf", "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
+        /* Secrets access */
+        "--talk-name=org.freedesktop.secrets",
+        /* Play sounds */
+        "--socket=pulseaudio"
+    ],
+    "build-options" : {
+        "cflags": "-O2 -g",
+        "cxxflags": "-O2 -g",
+        "env": {
+            "V": "1"
+        }
+    },
+    "cleanup": [
+        "/include",
+        "/lib/pkgconfig",
+        "/share/pkgconfig",
+        "/share/aclocal",
+        "/man",
+        "/share/man",
+        "/share/gtk-doc",
+        "*.la",
+        "*.a",
+        "*.pyc",
+        "*.pyo",
+        "__pycache__"
+    ],
+    "modules": [
+        {
+            "name": "elephas",
+            "command": "elephas",
+            "buildsystem": "meson",
+            "builddir": true,
+            "build-options" : {
+              "build-args": ["--share=network"]
+            },
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "file:///home/vrutkovs/src/python/elephas"
+                }
+            ]
+        }
+    ]
+}

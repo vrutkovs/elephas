@@ -1,0 +1,9 @@
+[Desktop Entry]
+_Name=Elephas
+_Comment=Mastodon client
+Icon=elephas
+Exec=elephas
+Terminal=false
+Type=Application
+Categories=GNOME;GTK
+StartupNotify=true
