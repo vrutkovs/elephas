@@ -3,5 +3,8 @@
   <gresource prefix="/com/github/Elephas">
     <file>application.css</file>
     <file preprocess="xml-stripblanks">AboutDialog.ui</file>
+    <file>headerbar.ui</file>
+    <file>viewswitcher.ui</file>
+    <file>tootslist.ui</file>
   </gresource>
 </gresources>

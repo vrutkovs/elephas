@@ -3,12 +3,24 @@ from gi.repository import Gtk, Gio
 from gettext import gettext as _
 
 from elephas.utils import log
+from elephas.widgets.toolbar import Toolbar, ToolbarState
+from elephas.widgets.toots_list import TootsList
 
 
 class Window(Gtk.ApplicationWindow):
 
     def __repr__(self):
         return '<Window>'
+
+    @log
+    def __init__(self, app):
+        Gtk.ApplicationWindow.__init__(self,
+                                       application=app,
+                                       title=_("Elephas"))
+        self.settings = Gio.Settings.new('com.github.Elephas')
+
+        self._restore_window()
+        self._setup_view()
 
     @log
     def _restore_window(self):
@@ -35,10 +47,23 @@ class Window(Gtk.ApplicationWindow):
                                   'GDK_WINDOW_STATE_MAXIMIZED' in event_names)
 
     @log
-    def __init__(self, app):
-        Gtk.ApplicationWindow.__init__(self,
-                                       application=app,
-                                       title=_("Elephas"))
-        self.settings = Gio.Settings.new('com.github.Elephas')
+    def _setup_view(self):
+        self._box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
-        self._restore_window()
+        self.toolbar = Toolbar()
+        self.set_titlebar(self.toolbar.header_bar)
+        self.toolbar.set_state(ToolbarState.HOME_TIMELINE)
+        self.toolbar.header_bar.show()
+
+        self._box.pack_start(self.toolbar.viewswitcher, False, True, 0)
+        self.toolbar.viewswitcher.show()
+
+        self.tootslist = TootsList()
+        self._box.pack_end(self.tootslist.listbox, True, True, 0)
+        self.tootslist.listbox.show()
+
+        self._box.set_homogeneous(False)
+        self._box.show()
+
+        self.add(self._box)
+        self.show()
