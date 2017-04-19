@@ -10,7 +10,8 @@ with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 pip_session = PipSession()
-parsed_reqs = parse_requirements('requirements.txt', session=pip_session)
+#parsed_reqs = parse_requirements('requirements.txt', session=pip_session)
+parsed_reqs = []
 parsed_reqs_dev = parse_requirements('requirements_dev.txt', session=pip_session)
 requirements = [str(x.req) for x in parsed_reqs]
 test_requirements = [str(x.req) for x in parsed_reqs_dev]

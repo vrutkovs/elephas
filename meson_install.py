@@ -15,5 +15,7 @@ if not os.environ.get('DESTDIR'):
                      os.environ['MESON_SOURCE_ROOT']])
 
     print('Installing via setuptools')
+    subprocess.call(['pip3', 'install', '-r', 'requirements.txt', '--prefix=' + prefix],
+                    cwd=os.environ['MESON_SOURCE_ROOT'])
     subprocess.call(['python3', 'setup.py', 'install', '--prefix=' + prefix],
                     cwd=os.environ['MESON_SOURCE_ROOT'])
